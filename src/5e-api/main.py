@@ -112,7 +112,7 @@ class Alignments(APICall):
         """Initializes an Alignments API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific alignment by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('alignments', specific, itemes_per_page)
@@ -123,7 +123,7 @@ class Backgrounds(APICall):
         """Initializes a Backgrounds API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific background by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('backgrounds', specific, itemes_per_page)
@@ -134,7 +134,7 @@ class Classes(APICall):
         """Initializes a Classes API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific class by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('classes', specific, itemes_per_page)
@@ -145,7 +145,7 @@ class Conditions(APICall):
         """Initializes a Conditions API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific condition by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('conditions', specific, itemes_per_page)
@@ -156,7 +156,7 @@ class DamageTypes(APICall):
         """Initializes a DamageTypes API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific damage type by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('damage-types', specific, itemes_per_page)
@@ -167,7 +167,7 @@ class Equipment(APICall):
         """Initializes a Equipment API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific equipment by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('equipment', specific, itemes_per_page)
@@ -178,7 +178,7 @@ class EquipmentCategories(APICall):
         """Initializes an EquipmentCategories API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific equipment category by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('equipment-categories', specific, itemes_per_page)
@@ -189,7 +189,7 @@ class Feats(APICall):
         """Initializes a Feats API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific feat by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('feats', specific, itemes_per_page)
@@ -200,7 +200,7 @@ class Features(APICall):
         """Initializes a Features API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific features by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('features', specific, itemes_per_page)
@@ -211,7 +211,7 @@ class Languages(APICall):
         """Initializes a Languages API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific language by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('languages', specific, itemes_per_page)
@@ -222,7 +222,7 @@ class MagicItems(APICall):
         """Initializes a MagicItems API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific magic item by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('magic-items', specific, itemes_per_page)
@@ -233,7 +233,7 @@ class MagicSchools(APICall):
         """Initializes a MagicSchools API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific magic school by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('magic-schools', specific, itemes_per_page)
@@ -244,7 +244,7 @@ class Monsters(APICall):
         """Initializes a Monsters API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific monster by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('monsters', specific, itemes_per_page)
@@ -255,7 +255,7 @@ class Proficiencies(APICall):
         """Initializes a Proficiencies API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific proficiency by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('proficiencies', specific, itemes_per_page)
@@ -266,7 +266,7 @@ class Races(APICall):
         """Initializes a Races API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific race by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('races', specific, itemes_per_page)
@@ -277,7 +277,7 @@ class Rules(APICall):
         """Initializes a Rules API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific rule by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('rules', specific, itemes_per_page)
@@ -288,7 +288,7 @@ class Skills(APICall):
         """Initializes a Skills API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific skill by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('skills', specific, itemes_per_page)
@@ -299,7 +299,7 @@ class Spells(APICall):
         """Initializes a Spells API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific spell by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('spells', specific, itemes_per_page)
@@ -310,7 +310,7 @@ class Subclasses(APICall):
         """Initializes a Subclasses API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific subclass by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('subclasses', specific, itemes_per_page)
@@ -321,7 +321,7 @@ class Subraces(APICall):
         """Initializes a Subraces API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific subrace by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('subraces', specific, itemes_per_page)
@@ -332,7 +332,7 @@ class Traits(APICall):
         """Initializes a Traits API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific trait by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('traits', specific, itemes_per_page)
@@ -343,7 +343,7 @@ class WeaponProperties(APICall):
         """Initializes a WeaponProperties API call.
 
         Args:
-        specific (str): Optional filter to get a specific ability score by name.
+        specific (str): Optional filter to get a specific weapon property by name.
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('weapon-properties', specific, itemes_per_page)
