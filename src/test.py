@@ -14,8 +14,7 @@ async def populate_queue():
     for i in range(1):
         open_requests.append(await API.request(priority=True))
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(populate_queue())
+asyncio.run(populate_queue())
 
 values = {}
 finished = 0

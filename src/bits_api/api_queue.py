@@ -10,7 +10,6 @@ class APIQueue():
         Args:
             max_threads (int): The maximum number of threads to use for API requests. Default is -1 for no limit.
         """
-        super().__init__()
         self.max_threads = max_threads
         self.responses = {}
         self.manager = self.thread_manager(self)
