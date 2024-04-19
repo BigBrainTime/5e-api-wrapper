@@ -1,4 +1,4 @@
-from src.bits_api.bits_api import APICall
+from bits_api.api_call import APICall
 import random
 from threading import Thread
 

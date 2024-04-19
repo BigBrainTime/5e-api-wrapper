@@ -1,6 +1,6 @@
 import json
 import asyncio
-from src.bits_api import APIQueue
+from bits_api import APIQueue
 from time import sleep, time
 
 open_requests = []
@@ -15,7 +15,7 @@ API = APIQueue(120)
 start = int(time())
 
 loop = asyncio.get_event_loop()
-loop.run_until_complete(populate_queue)
+loop.run_until_complete(populate_queue())
 
 values = {}
 finished = 0
