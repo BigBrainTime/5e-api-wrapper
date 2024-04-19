@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "5e-api"
+version = "1.0.0"
+authors = [
+  { name="BigBrainTime", email="" },
+]
+description = "A wrapper for the 5e API"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/BigBrainTime/5e-api-wrapper"
+Issues = "https://github.com/BigBrainTime/5e-api-wrapper/issues"
