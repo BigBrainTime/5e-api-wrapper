@@ -1,14 +1,11 @@
-import requests
+import httpx
 import warnings
 import json
-import random
-from threading import Thread
-from time import sleep, time
 
-api = 'https://www.dnd5eapi.co/api/'
+API = 'https://www.dnd5eapi.co/api/'
 
 class APICall():
-    def __init__(self, top_level: str = '', specific: str = '', itemes_per_page: int = None) -> None:
+    async def __init__(self, top_level: str = '', specific: str = '', itemes_per_page: int = None) -> None:
         """Initializes APICall with top level and specific endpoints.
     
         Parameters:
@@ -27,9 +24,9 @@ class APICall():
         Handles API errors and pagination.
         """
         if top_level == '':
-            self.response = requests.get(f'{api}')
+            self.response = await httpx.get(f'{API}')
         else:
-            self.response = requests.get(f'{api}/{top_level}/{specific}')
+            self.response = await httpx.get(f'{API}/{top_level}/{specific}')
         self.status = self.response.status_code
         self.data = json.loads(self.response.text)
 
@@ -68,6 +65,8 @@ class APICall():
             else:
                 self.pages = self.results if isinstance(self.results, list) else [self.results]
 
+    async def call():
+        return 
 
     def paginate_results(self, items_per_page: int):
         """Paginates the results into pages of items_per_page items each.
@@ -347,191 +346,3 @@ class WeaponProperties(APICall):
         itemes_per_page (int): Optional number of items per page for pagination.
         """
         super().__init__('weapon-properties', specific, itemes_per_page)
-
-
-class APIQueue():
-    def __init__(self, max_threads:int=-1) -> None:
-        """Initializes an APIQueue instance.
-    
-        Args:
-            max_threads (int): The maximum number of threads to use for API requests. Default is -1 for no limit.
-        """
-        super().__init__()
-        self.max_threads = max_threads
-        self.responses = {}
-        self.manager = self.thread_manager(self)
-        self.manager.running = False
-        
-    def request(self, top_level: str = '', specific: str = '', items_per_page: int = None, priority: bool = False) -> int:
-        """
-        Adds a request to the queue.
-    
-        Generates a random ID, adds the request to the priority queue or regular 
-        queue based on the priority flag, and returns the ID.
-    
-        Args:
-            top_level (str): The top level API endpoint for the request.
-            specific (str): Filter for a specific result.
-            items_per_page (int): Number of items per page for pagination.
-            priority (bool): Whether this is a priority request.
-    
-        Returns:
-            The generated random ID (int) for the request.
-        """
-        made_manager = False
-        if not self.manager.running:
-            made_manager = True
-            self.manager = self.thread_manager(self)
-
-        ID = random.randrange(1000,9999)
-        while ID in self.manager.queue or ID in self.manager.priority_queue or ID in self.responses or ID == self.manager.active or ID in self.manager.active_threads:
-            ID = random.randrange(1000, 9999)
-
-        if priority:
-            self.manager.priority_queue[ID] = (top_level, specific, items_per_page)
-        else:
-            self.manager.queue[ID] = (top_level, specific, items_per_page)
-
-        if made_manager:
-            self.manager.start()
-
-        return ID
-    
-
-    def is_ready(self, ID: int) -> bool:
-        """Checks if a request with the given ID has completed.
-    
-        Args:
-            ID (int): The request ID to check.
-            
-        Returns:
-            bool: True if the request has completed, False otherwise.
-        """
-        return ID in self.responses
-        
-
-    def read_response(self, ID: int) -> dict:
-        """Reads the response for the given request ID.
-    
-        Checks if the ID exists in the responses dict, the active requests, 
-        the priority queue, the regular queue, and returns the appropriate 
-        response or error.
-        
-        Deletes response after response is read
-
-        Args:
-            ID (int): The request ID to get the response for.
-        
-        Returns:
-            dict: The response data if found, or a status message if not.
-        """
-        if self.is_ready(ID):
-            response = self.responses[ID]
-            del self.responses[ID]
-            return {"Status":"Done","Result":response}
-        elif ID == self.manager.active or ID in self.manager.active_threads:
-            return {"Status": "Working"}
-        elif ID in self.manager.priority_queue:
-            return {"Status": "Queue", "Queue": "Priority", "Position": list(self.manager.priority_queue.keys()).index(ID)}
-        elif ID in self.manager.queue:
-            return {"Status": "Queue", "Queue": "Normal", "Position": list(self.manager.queue.keys()).index(ID)}
-        else:
-            return {"Status":"Error","Error": "Not Found"}
-
-
-    def stop(self):
-        """Forces stop of processing queues
-        """
-        self.manager.running = False
-
-    class thread_manager(Thread):
-        def __init__(self, main):
-            super().__init__()
-            self.main = main
-            self.max_threads = main.max_threads
-            self.priority_queue = {}
-            self.queue = {}
-            self.active = None
-            self.active_threads = {}
-            self.running = True
-
-
-        def run(self):
-            while self.running:
-                if len(self.priority_queue) > 0 and (len(self.active_threads) < self.max_threads or self.max_threads in (-1,0)):
-                    request = list(self.priority_queue.keys())[0]
-                    if self.max_threads == 0:
-                        self.active = request
-                        self.main.responses[request] = APICall(*self.queue[request])
-                        del self.queue[request]
-                        self.active = None
-                    else:
-                        self.active_threads[request]=self.download_thread(self, request, *self.priority_queue[request])
-                        del self.priority_queue[request]
-
-                elif len(self.queue) > 0:
-                    request = list(self.queue.keys())[0]
-                    self.active = request
-                    self.main.responses[request] = APICall(*self.queue[request])
-                    del self.queue[request]
-                    self.active = None
-
-                if len(self.priority_queue) == 0 and len(self.active_threads) == 0 and len(self.queue) == 0:
-                    self.running = False
-
-
-        class download_thread(Thread):
-            def __init__(self, manager, threadID, top_level: str = '', specific: str = '', items_per_page: int = None):
-                super().__init__()
-                self.ID = threadID
-                self.manager = manager
-                self.result = None
-                self.top = top_level
-                self.specific = specific
-                self.items = items_per_page
-                self.start()
-
-
-            def run(self):
-                self.manager.main.responses[self.ID] = APICall(self.top,self.specific,self.items)
-                del self.manager.active_threads[self.ID]
-
-
-if __name__ == "__main__":
-    API = APIQueue(120)
-    open_requests = []
-    start = int(time())
-    for i in range(10):
-        open_requests.append(API.request())
-    for i in range(1000):
-        open_requests.append(API.request(priority=True))
-
-    values = {}
-    finished = 0
-    while len(open_requests) > 0:
-        to_remove = []
-        for ID in open_requests:
-            response = API.read_response(ID)
-
-            if response["Status"] == "Done":
-                to_remove.append(ID)
-                del response['Result']
-                finished += 1
-
-                values[ID] = {"Response": response, 'TIME':int(time())-start}
-        
-        for ID in to_remove:
-            open_requests.remove(ID)
-
-        print(finished, len(API.manager.active_threads))
-        sleep(3)
-    print(f"Took {int(time())-start} seconds")
-    sleep(2)
-    print("LAST CALL")
-    last_call = API.request()
-    while not API.is_ready(last_call):
-        pass
-    print(API.read_response(last_call))
-
-    with open('timed_output.json','w') as file:
-        file.write(json.dumps(values,indent=2))
