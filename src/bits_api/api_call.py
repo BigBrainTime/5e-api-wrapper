@@ -65,9 +65,6 @@ class APICall():
             else:
                 self.pages = self.results if isinstance(self.results, list) else [self.results]
 
-    async def call():
-        return 
-
     def paginate_results(self, items_per_page: int):
         """Paginates the results into pages of items_per_page items each.
     

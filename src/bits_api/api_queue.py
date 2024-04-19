@@ -48,7 +48,7 @@ class APIQueue():
             self.manager.queue[ID] = (top_level, specific, items_per_page)
 
         if made_manager:
-            await self.manager.start()
+            await self.manager.run()
 
         return ID
 
@@ -96,9 +96,8 @@ class APIQueue():
         """
         self.manager.running = False
 
-    class thread_manager(Thread):
+    class thread_manager():
         def __init__(self, main):
-            super().__init__()
             self.main = main
             self.max_threads = main.max_threads
             self.priority_queue = {}

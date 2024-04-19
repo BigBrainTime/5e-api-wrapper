@@ -5,14 +5,14 @@ from time import sleep, time
 
 open_requests = []
 
+API = APIQueue(120)
+start = int(time())
+
 async def populate_queue():
     for i in range(1):
         open_requests.append(await API.request())
     for i in range(1):
         open_requests.append(await API.request(priority=True))
-
-API = APIQueue(120)
-start = int(time())
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(populate_queue())
